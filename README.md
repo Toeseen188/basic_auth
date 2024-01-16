@@ -30,7 +30,7 @@ This repository demonstrates a simple implementation of basic authentication usi
    ```
    
    ```bash
-   cd basic-authentication
+   cd basic_auth
    npm install
    ```
   ```bash
