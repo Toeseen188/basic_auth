@@ -27,15 +27,15 @@ This repository demonstrates a simple implementation of basic authentication usi
 
    ```bash
    git clone https://github.com/Toeseen188/basic_auth.git
-
+   ```
    
    ```bash
    cd basic-authentication
    npm install
-
+   ```
   ```bash
   npm run start
-
+  ```
 The application will be running at http://localhost:3000.
 
 ### Endpoint
@@ -45,13 +45,13 @@ The application will be running at http://localhost:3000.
 - **Method:** `POST`
 - **Description:** Register a new user with a unique username and password.
 - **Request Body:**
-
+curl -X POST -H "Content-Type: application/json" -d '{"username": "Tosin", "password": "Olaonipeku"}' http://localhost:3000/auth/register
   ```json
   {
     "username": "your-username",
     "password": "your-password"
   }
-
+  ```
 - **Response:**
  - 201 Created: User registered successfully.
  - 400 Bad Request: User with the same username already exists.
@@ -61,13 +61,13 @@ The application will be running at http://localhost:3000.
 - **Method:** `POST`
 - **Description:** Authenticate and log in an existing user.
 - **Request Body:**
-
+curl -X POST -H "Content-Type: application/json" -d '{"username": "", "password": ""}' http://localhost:3000/auth/login
   ```json
   {
     "username": "your-username",
     "password": "your-password"
   }
-
+  ```
 - **Response:**
  - 200 OK: Login successful. Access token is included in the response.
  - 401 Unauthorized: Wrong credentials.
