@@ -45,7 +45,7 @@ The application will be running at http://localhost:3000.
 - **Method:** `POST`
 - **Description:** Register a new user with a unique username and password.
 - **Request Body:**
-curl -X POST -H "Content-Type: application/json" -d '{"username": "Tosin", "password": "Olaonipeku"}' http://localhost:3000/auth/register
+curl -X POST -H "Content-Type: application/json" -d '{"username": "", "password": ""}' http://localhost:3000/auth/register
   ```json
   {
     "username": "your-username",
