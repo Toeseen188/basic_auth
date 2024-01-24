@@ -22,14 +22,12 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { User, UserDocument } from './user.schema';
+import { User, type UserDocument } from './user.schema';
+import { type UserDto } from './dto/user.dto';
 import { Model } from 'mongoose';
 export declare class UserService {
-    private readonly userModel;
-    constructor(userModel: Model<UserDocument>);
-    createUser(user: {
-        username: string;
-        password: string;
-    }): Promise<User>;
+    private readonly UserModel;
+    constructor(UserModel: Model<UserDocument>);
+    createUser(user: UserDto): Promise<User>;
     findUserByUsername(username: string): Promise<UserDocument | null>;
 }

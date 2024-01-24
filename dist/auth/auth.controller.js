@@ -16,6 +16,8 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const auth_service_1 = require("./auth.service");
+const register_dto_1 = require("./dto/register.dto");
+const user_dto_1 = require("./dto/user.dto");
 let AuthController = class AuthController {
     constructor(userService, authService) {
         this.userService = userService;
@@ -24,49 +26,54 @@ let AuthController = class AuthController {
     async register(user) {
         try {
             const existingUser = await this.userService.findUserByUsername(user.username);
-            if (existingUser) {
+            if (existingUser !== null) {
                 console.log(`User: ${user.username} already exist`);
                 return {
                     message: `User: ${user.username} already exist`,
-                    statusCode: 400,
+                    statusCode: 409
                 };
             }
             const newUser = await this.userService.createUser({
                 username: user.username,
-                password: user.password,
+                password: user.password
             });
-            if (newUser) {
+            if (newUser !== null) {
                 console.log(`User: ${user.username} is created successfully`);
                 return {
                     message: `User: ${user.username} created Successfully`,
-                    statusCode: 201,
+                    statusCode: 201
                 };
             }
-            return { message: 'Error creating user', statusCode: 402 };
+            return { message: 'Error creating user', statusCode: 401 };
         }
         catch (error) {
             console.error('Cannot connect to endpoint auth/register', error);
+            return { message: 'Internal SErver Error', statusCode: 500 };
         }
     }
     async login(user) {
         try {
             const userExist = await this.authService.validateUser(user.username, user.password);
-            if (userExist) {
-                const token = await this.authService.generateToken(userExist);
-                console.log(`User ${user.username} is logged in successfully. Access Token created`);
-                return {
-                    message: 'User logged in Successfully',
-                    access_token: token,
-                    statusCode: 201,
-                };
+            if (userExist.user !== null) {
+                if (userExist.isValid) {
+                    const token = this.authService.generateToken(userExist.user);
+                    console.log(`User: ${user.username} is logged in successfully. Access Token created`);
+                    return {
+                        message: 'User logged in Successfully',
+                        access_token: token,
+                        statusCode: 201
+                    };
+                }
+                return { message: 'Password incorrect. Please input the correct password', statusCode: 401 };
             }
             return {
-                message: 'User Unauthorized / wrong credentials',
-                statusCode: 500,
+                message: 'User Not Found. Please login with the correct credentials',
+                statusCode: 401
             };
         }
         catch (error) {
             console.error('Error logging in through the endpoint auth/login', error);
+            return { message: 'Internal Server Error', statusCode: 500 };
         }
     }
 };
@@ -75,14 +82,14 @@ __decorate([
     (0, common_1.Post)('register'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [register_dto_1.RegisterDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "register", null);
 __decorate([
     (0, common_1.Post)('login'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [user_dto_1.UserDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
 exports.AuthController = AuthController = __decorate([

@@ -19,10 +19,10 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             auth_module_1.AuthModule,
-            mongoose_1.MongooseModule.forRoot('mongodb://localhost:27017/my_auth_db'),
+            mongoose_1.MongooseModule.forRoot('mongodb://localhost:27017/my_auth_db')
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService]
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

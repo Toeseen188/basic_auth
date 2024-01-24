@@ -26,13 +26,17 @@ let AuthService = class AuthService {
                 .createHash('sha256')
                 .update(password)
                 .digest('hex'));
-            if (user && user.password == hashedPassword) {
-                return user;
+            if (user !== null && user.password === hashedPassword) {
+                return { isValid: true, user };
             }
-            return null;
+            if (user !== null && user.password !== hashedPassword) {
+                return { isValid: false, user };
+            }
+            return { isValid: false, user: null };
         }
         catch (error) {
             console.error('error while validating user', error);
+            throw error;
         }
     }
     generateToken(user) {

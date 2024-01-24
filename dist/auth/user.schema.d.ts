@@ -22,9 +22,8 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { UserInterface } from './interfaces/user.interface';
 import { Document } from 'mongoose';
-export declare class User extends Document implements UserInterface {
+export declare class User extends Document {
     username: string;
     password: string;
 }

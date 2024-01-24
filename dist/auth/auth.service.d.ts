@@ -1,10 +1,13 @@
 import { UserService } from './user.service';
 import { JwtService } from '@nestjs/jwt';
-import { User, UserDocument } from './user.schema';
+import { type User, type UserDocument } from './user.schema';
 export declare class AuthService {
-    private userService;
-    private jwtService;
+    private readonly userService;
+    private readonly jwtService;
     constructor(userService: UserService, jwtService: JwtService);
-    validateUser(username: string, password: string): Promise<UserDocument>;
-    generateToken(user: User): string;
+    validateUser(username: string, password: string): Promise<{
+        isValid: boolean;
+        user: UserDocument | null;
+    }>;
+    generateToken(user: User): string | undefined;
 }

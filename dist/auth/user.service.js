@@ -19,8 +19,8 @@ const user_schema_1 = require("./user.schema");
 const mongoose_2 = require("mongoose");
 const crypto = require("crypto");
 let UserService = class UserService {
-    constructor(userModel) {
-        this.userModel = userModel;
+    constructor(UserModel) {
+        this.UserModel = UserModel;
     }
     async createUser(user) {
         try {
@@ -28,8 +28,8 @@ let UserService = class UserService {
                 .createHash('sha256')
                 .update(user.password)
                 .digest('hex');
-            const newUser = new this.userModel(user);
-            return newUser.save();
+            const newUser = new this.UserModel(user);
+            return await newUser.save();
         }
         catch (error) {
             console.error('User Model cannot be created', error.message);
@@ -38,7 +38,7 @@ let UserService = class UserService {
     }
     async findUserByUsername(username) {
         try {
-            return this.userModel.findOne({ username }).exec();
+            return await this.UserModel.findOne({ username }).exec();
         }
         catch (error) {
             console.error('Error finding username', error);

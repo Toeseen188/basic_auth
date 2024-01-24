@@ -23,11 +23,11 @@ exports.AuthModule = AuthModule = __decorate([
             mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }]),
             jwt_1.JwtModule.register({
                 secret: 'basic_key',
-                signOptions: { expiresIn: '60s' },
-            }),
+                signOptions: { expiresIn: '60s' }
+            })
         ],
         controllers: [auth_controller_1.AuthController],
-        providers: [user_service_1.UserService, auth_service_1.AuthService],
+        providers: [user_service_1.UserService, auth_service_1.AuthService]
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map
